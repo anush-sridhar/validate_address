@@ -14,6 +14,8 @@
   <p id="successMessage" style="color: green; display: none;">Address validated successfully. Your validation code is: <span id="validationCode"></span></p>
 
   <script>
+    const serverUrl = 'your-server-url'; // Replace this with the actual URL of your deployed server
+
     function isValidAddress(address) {
       const web3 = new Web3();
       return web3.utils.isAddress(address);
@@ -32,7 +34,7 @@
     }
 
     async function sendDataToServer(ethereum_address, validation_code) {
-      const response = await fetch('/store_address', {
+      const response = await fetch(`${serverUrl}/store_address`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
