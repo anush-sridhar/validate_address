@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ethereum Address Validation</title>
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.6.1/dist/web3.min.js"></script>
+</head>
+<body>
+  <label for="ethereumAddress">Ethereum Wallet Address:</label>
+  <input type="text" id="ethereumAddress" name="ethereumAddress">
+  <p id="errorMessage" style="color: red; display: none;">Invalid Ethereum address. Please enter a valid address.</p>
+  <button id="validateButton" onclick="validateAddress()">Validate Address</button>
+  <p id="successMessage" style="color: green; display: none;">Address validated successfully.</p>
+
+  <script>
+    function isValidAddress(address) {
+      const web3 = new Web3();
+      return web3.utils.isAddress(address);
+    }
+
+    function validateAddress() {
+      const inputField = document.getElementById('ethereumAddress');
+      const errorMessage = document.getElementById('errorMessage');
+      const successMessage = document.getElementById('successMessage');
+      const address = inputField.value;
+
+      if (isValidAddress(address)) {
+        errorMessage.style.display = 'none';
+        successMessage.style.display = 'block';
+      } else {
+        errorMessage.style.display = 'block';
+        successMessage.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>
