@@ -9,7 +9,7 @@
   <form id="validationForm">
     <label for="validationCode">Enter your validation code:</label>
     <input type="text" id="validationCode" name="validationCode">
-    <button type="button" id="checkCodeButton" onclick="checkCode()">Check Code</button>
+    <button type="button" id="checkCodeButton">Check Code</button>
     <p id="codeErrorMessage" style="color: red; display: none;">Invalid validation code. Please enter a valid code.</p>
     <p id="codeSuccessMessage" style="color: green; display: none;">Validation code verified successfully.</p>
   </form>
@@ -35,6 +35,8 @@
         codeSuccessMessage.style.display = 'none';
       }
     }
+
+    document.getElementById('checkCodeButton').addEventListener('click', checkCode);
   </script>
 </body>
 </html>
