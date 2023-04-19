@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Validation Code Check</title>
+</head>
+<body>
+  <form id="validationForm">
+    <label for="validationCode">Enter your validation code:</label>
+    <input type="text" id="validationCode" name="validationCode">
+    <button type="button" id="checkCodeButton" onclick="checkCode()">Check Code</button>
+    <p id="codeErrorMessage" style="color: red; display: none;">Invalid validation code. Please enter a valid code.</p>
+    <p id="codeSuccessMessage" style="color: green; display: none;">Validation code verified successfully.</p>
+  </form>
+
+  <script>
+    async function checkCode() {
+      const validationCodeInput = document.getElementById('validationCode');
+      const validationCode = validationCodeInput.value;
+      const codeErrorMessage = document.getElementById('codeErrorMessage');
+      const codeSuccessMessage = document.getElementById('codeSuccessMessage');
+
+      const response = await fetch('https://validate-address.glitch.me/check_code?validation_code=' + encodeURIComponent(validationCode));
+      const data = await response.json();
+
+      if (data.valid) {
+        codeErrorMessage.style.display = 'none';
+        codeSuccessMessage.style.display = 'block';
+        setTimeout(() => {
+          window.parent.postMessage('submit', '*');
+        }, 1000);
+      } else {
+        codeErrorMessage.style.display = 'block';
+        codeSuccessMessage.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>
