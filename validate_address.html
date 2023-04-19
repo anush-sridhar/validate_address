@@ -11,7 +11,6 @@
   <input type="text" id="ethereumAddress" name="ethereumAddress">
   <p id="errorMessage" style="color: red; display: none;">Invalid Ethereum address. Please enter a valid address.</p>
   <button id="validateButton" onclick="validateAddress()">Validate Address</button>
-  <p id="successMessage" style="color: green; display: none;">Address validated successfully. Your validation code is: <span id="validationCode"></span></p>
 
   <script>
     const serverUrl = 'https://validate-address.glitch.me'; // Replace this with the actual URL of your deployed server
@@ -21,50 +20,33 @@
       return web3.utils.isAddress(address);
     }
 
-    function generateValidationCode() {
-      const length = 6;
-      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-      let result = '';
-
-      for (let i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * characters.length));
-      }
-
-      return result;
-    }
-
-    async function sendDataToServer(ethereum_address, validation_code) {
+    async function sendDataToServer(ethereum_address) {
       const response = await fetch(`${serverUrl}/store_address`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ ethereum_address, validation_code })
+        body: JSON.stringify({ ethereum_address })
       });
 
       if (response.ok) {
-        console.log('Address and validation code stored.');
+        console.log('Address stored.');
       } else {
-        console.error('Error storing address and validation code.');
+        console.error('Error storing address.');
       }
     }
 
     function validateAddress() {
       const inputField = document.getElementById('ethereumAddress');
       const errorMessage = document.getElementById('errorMessage');
-      const successMessage = document.getElementById('successMessage');
-      const validationCodeElement = document.getElementById('validationCode');
       const address = inputField.value;
 
       if (isValidAddress(address)) {
         errorMessage.style.display = 'none';
-        successMessage.style.display = 'block';
-        const validationCode = generateValidationCode();
-        validationCodeElement.textContent = validationCode;
-        sendDataToServer(address, validationCode);
+        sendDataToServer(address);
+        window.parent.postMessage('submit', '*');
       } else {
         errorMessage.style.display = 'block';
-        successMessage.style.display = 'none';
       }
     }
   </script>
