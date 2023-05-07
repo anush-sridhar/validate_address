@@ -28,12 +28,12 @@ async function mintNFT(recipient, tokenId) {
 
   const tokenURI = `https://ipfs.io/ipfs/${folderCID}/metadata-${tokenId}.json`;
 
-  const txData = nftContract.methods.mintNFT(recipient, tokenId, tokenURI).encodeABI();
+  const txData = nftContract.methods.mintNFT(recipient, tokenId).encodeABI();
 
   const transaction = {
     to: contractAddress,
     data: txData,
-    gas: await nftContract.methods.mintNFT(recipient, tokenId, tokenURI).estimateGas(),
+    gas: await nftContract.methods.mintNFT(recipient, tokenId).estimateGas(),
   };
 
   const signedTransaction = await web3.eth.accounts.signTransaction(transaction, privateKey);
