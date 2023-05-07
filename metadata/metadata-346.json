@@ -1,0 +1,11 @@
+{
+  "name": "My Awesome NFT 346",
+  "description": "This is NFT number 346",
+  "image": "https://ipfs.io/ipfs/QmYneB3tPpbn246uh62MaedEqHPbakqKH14hckyzPcVCAU/nft-image-346.png",
+  "attributes": [
+    {
+      "trait_type": "rarity",
+      "value": 43
+    }
+  ]
+}

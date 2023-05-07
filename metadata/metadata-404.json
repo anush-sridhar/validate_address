@@ -1,0 +1,11 @@
+{
+  "name": "My Awesome NFT 404",
+  "description": "This is NFT number 404",
+  "image": "https://ipfs.io/ipfs/QmYneB3tPpbn246uh62MaedEqHPbakqKH14hckyzPcVCAU/nft-image-404.png",
+  "attributes": [
+    {
+      "trait_type": "rarity",
+      "value": 81
+    }
+  ]
+}

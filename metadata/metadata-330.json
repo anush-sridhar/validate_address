@@ -1,0 +1,11 @@
+{
+  "name": "My Awesome NFT 330",
+  "description": "This is NFT number 330",
+  "image": "https://ipfs.io/ipfs/QmYneB3tPpbn246uh62MaedEqHPbakqKH14hckyzPcVCAU/nft-image-330.png",
+  "attributes": [
+    {
+      "trait_type": "rarity",
+      "value": 26
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "nftproject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@alch/alchemy-web3": "^1.4.7",
+    "@openzeppelin/contracts": "^3.4.2",
+    "@truffle/hdwallet-provider": "^2.1.10",
+    "dotenv": "^16.0.3"
+  }
+}

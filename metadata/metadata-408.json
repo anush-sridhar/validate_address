@@ -1,0 +1,11 @@
+{
+  "name": "My Awesome NFT 408",
+  "description": "This is NFT number 408",
+  "image": "https://ipfs.io/ipfs/QmYneB3tPpbn246uh62MaedEqHPbakqKH14hckyzPcVCAU/nft-image-408.png",
+  "attributes": [
+    {
+      "trait_type": "rarity",
+      "value": 94
+    }
+  ]
+}

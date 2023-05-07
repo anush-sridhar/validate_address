@@ -1,0 +1,11 @@
+{
+  "name": "My Awesome NFT 256",
+  "description": "This is NFT number 256",
+  "image": "https://ipfs.io/ipfs/QmYneB3tPpbn246uh62MaedEqHPbakqKH14hckyzPcVCAU/nft-image-256.png",
+  "attributes": [
+    {
+      "trait_type": "rarity",
+      "value": 56
+    }
+  ]
+}

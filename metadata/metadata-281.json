@@ -1,0 +1,11 @@
+{
+  "name": "My Awesome NFT 281",
+  "description": "This is NFT number 281",
+  "image": "https://ipfs.io/ipfs/QmYneB3tPpbn246uh62MaedEqHPbakqKH14hckyzPcVCAU/nft-image-281.png",
+  "attributes": [
+    {
+      "trait_type": "rarity",
+      "value": 97
+    }
+  ]
+}

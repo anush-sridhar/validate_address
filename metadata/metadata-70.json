@@ -1,0 +1,11 @@
+{
+  "name": "My Awesome NFT 70",
+  "description": "This is NFT number 70",
+  "image": "https://ipfs.io/ipfs/QmYneB3tPpbn246uh62MaedEqHPbakqKH14hckyzPcVCAU/nft-image-70.png",
+  "attributes": [
+    {
+      "trait_type": "rarity",
+      "value": 54
+    }
+  ]
+}

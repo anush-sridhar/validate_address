@@ -1,0 +1,11 @@
+{
+  "name": "My Awesome NFT 23",
+  "description": "This is NFT number 23",
+  "image": "https://ipfs.io/ipfs/QmYneB3tPpbn246uh62MaedEqHPbakqKH14hckyzPcVCAU/nft-image-23.png",
+  "attributes": [
+    {
+      "trait_type": "rarity",
+      "value": 59
+    }
+  ]
+}

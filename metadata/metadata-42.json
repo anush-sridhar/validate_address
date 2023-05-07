@@ -1,0 +1,11 @@
+{
+  "name": "My Awesome NFT 42",
+  "description": "This is NFT number 42",
+  "image": "https://ipfs.io/ipfs/QmYneB3tPpbn246uh62MaedEqHPbakqKH14hckyzPcVCAU/nft-image-42.png",
+  "attributes": [
+    {
+      "trait_type": "rarity",
+      "value": 85
+    }
+  ]
+}

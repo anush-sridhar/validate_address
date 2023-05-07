@@ -1,0 +1,11 @@
+{
+  "name": "My Awesome NFT 273",
+  "description": "This is NFT number 273",
+  "image": "https://ipfs.io/ipfs/QmYneB3tPpbn246uh62MaedEqHPbakqKH14hckyzPcVCAU/nft-image-273.png",
+  "attributes": [
+    {
+      "trait_type": "rarity",
+      "value": 46
+    }
+  ]
+}

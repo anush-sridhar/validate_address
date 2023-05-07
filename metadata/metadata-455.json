@@ -1,0 +1,11 @@
+{
+  "name": "My Awesome NFT 455",
+  "description": "This is NFT number 455",
+  "image": "https://ipfs.io/ipfs/QmYneB3tPpbn246uh62MaedEqHPbakqKH14hckyzPcVCAU/nft-image-455.png",
+  "attributes": [
+    {
+      "trait_type": "rarity",
+      "value": 39
+    }
+  ]
+}

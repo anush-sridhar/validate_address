@@ -1,0 +1,11 @@
+{
+  "name": "My Awesome NFT 97",
+  "description": "This is NFT number 97",
+  "image": "https://ipfs.io/ipfs/QmYneB3tPpbn246uh62MaedEqHPbakqKH14hckyzPcVCAU/nft-image-97.png",
+  "attributes": [
+    {
+      "trait_type": "rarity",
+      "value": 95
+    }
+  ]
+}
