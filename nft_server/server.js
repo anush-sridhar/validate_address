@@ -3,11 +3,17 @@ const Web3 = require('web3');
 const dotenv = require('dotenv');
 const contractABI = require("../build/contracts/MyNFT.json").abi;
 const axios = require("axios");
+const cors = require('cors'); // Import cors
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
+
+// Use cors middleware to allow specific origins or all origins
+app.use(cors({
+  origin: '*' // This allows all origins. You can replace '*' with specific origins you want to allow, e.g., 'https://unisg.qualtrics.com'
+}));
 
 const alchemyProjectId = process.env.ALCHEMY_PROJECT_ID;
 const web3 = new Web3(new Web3.providers.HttpProvider(`https://polygon-mumbai.g.alchemy.com/v2/${alchemyProjectId}`));
@@ -82,6 +88,5 @@ app.post("/mint", async (req, res) => {
     res.status(500).send(error.message);
   }
 });
-
 
 module.exports = app;
