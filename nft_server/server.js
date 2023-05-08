@@ -84,11 +84,12 @@ app.post("/mint", async (req, res) => {
 
     console.log("Minting NFT with token ID:", nextTokenId);
     const txReceipt = await mintNFT(recipient, nextTokenId);
+
     console.log(`Minting successful, retrieving metadata for txReceipt: ${txReceipt}`);
     const metadataURL = `https://ipfs.io/ipfs/${folderCID}/metadata-${nextTokenId}.json`;
     console.log("Metadata URL:", metadataURL);
-
-    const nftMetadata = await getData(metadataURL);
+    const result = await axios.get(url);
+    const nftMetadata = JSON.stringify(result.data);
 
     if (!nftMetadata) {
       console.log("Metadata not available");
@@ -96,9 +97,13 @@ app.post("/mint", async (req, res) => {
       return;
     }
 
-    console.log("NFT metadata:", nftMetadata);
+    console.log(`image url: ${nftMetadata.image}`);
+    console.log(`rarity: ${nftMetadata.attributes[0].value}`);
 
-    res.status(200).send({ tokenId: nextTokenId, metadata: nftMetadata, txReceipt });
+    console.log("NFT metadata:", nftMetadata);
+    res.status(200).json(nftMetadata)
+
+    //res.status(200).send({ tokenId: nextTokenId, metadata: nftMetadata, txReceipt });
   } catch (error) {
     console.log("Error:", error.message);
     res.status(500).send(`got /mint error: ${error}`);
