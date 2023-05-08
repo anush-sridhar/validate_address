@@ -14,8 +14,6 @@ app.use(cors({
   origin: '*'
 }));
 
-app.timeout = 60000;
-
 const alchemyProjectId = process.env.ALCHEMY_PROJECT_ID;
 const web3 = new Web3(new Web3.providers.HttpProvider(`https://polygon-mumbai.g.alchemy.com/v2/${alchemyProjectId}`));
 
