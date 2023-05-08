@@ -105,6 +105,18 @@ app.post("/mint", async (req, res) => {
   }
 });
 
+app.post('/getRes', async (req, res) =>{
+  try {
+    const url = req.body.url;
+    const res = await axios.getData(url);
+    const data = res.json();
+    console.log(`got res: ${data}`);
+  } catch (error) {
+    console.log("Error:", error.message);
+    res.status(500).send(`got /getRes error: ${error}`);
+  }
+});
+
 
 
 module.exports = app;
