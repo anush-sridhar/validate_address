@@ -6,10 +6,10 @@
       "use": "@vercel/node"
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/.*",
-      "dest": "nft_server/server.js"
+      "source": "/.*",
+      "destination": "nft_server/server.js"
     }
   ],
   "headers": [
