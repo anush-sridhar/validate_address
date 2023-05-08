@@ -25,6 +25,15 @@ const numberOfNFTs = 500;
 
 let mintedTokens = new Set();
 
+async function isTokenMinted(tokenId) {
+  try {
+    const owner = await nftContract.methods.ownerOf(tokenId).call();
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
 async function mintNFT(recipient, tokenId) {
   const privateKey = process.env.MINTER_PRIVATE_KEY;
   const account = web3.eth.accounts.privateKeyToAccount(privateKey);
@@ -54,7 +63,7 @@ app.post("/mint", async (req, res) => {
     let nextTokenId;
     do {
       nextTokenId = Math.floor(Math.random() * numberOfNFTs) + 1;
-    } while (mintedTokens.has(nextTokenId));
+    } while (mintedTokens.has(nextTokenId) || await isTokenMinted(nextTokenId));
     mintedTokens.add(nextTokenId);
 
     console.log("Minting NFT with token ID:", nextTokenId);
@@ -80,5 +89,6 @@ app.post("/mint", async (req, res) => {
     res.status(500).send(error.message);
   }
 });
+
 
 module.exports = app;
