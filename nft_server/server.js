@@ -69,7 +69,6 @@ app.post("/mint", async (req, res) => {
     console.log("Minting NFT with token ID:", nextTokenId);
     const txReceipt = await mintNFT(recipient, nextTokenId);
     console.log("Minting successful, retrieving metadata...");
-
     const metadataURL = `https://ipfs.io/ipfs/${folderCID}/metadata-${nextTokenId}.json`;
     console.log("Metadata URL:", metadataURL);
 
@@ -82,7 +81,6 @@ app.post("/mint", async (req, res) => {
     }
 
     const nftMetadata = metadataResponse.data;
-
     console.log("NFT metadata:", nftMetadata);
 
     res.status(200).send({ tokenId: nextTokenId, metadata: nftMetadata, txReceipt });
