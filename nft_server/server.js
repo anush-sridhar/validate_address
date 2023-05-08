@@ -15,6 +15,8 @@ app.use(cors({
   origin: '*' // This allows all origins. You can replace '*' with specific origins you want to allow, e.g., 'https://unisg.qualtrics.com'
 }));
 
+app.timeout = 60000; // Set the server timeout to 60000 ms (60 seconds)
+
 const alchemyProjectId = process.env.ALCHEMY_PROJECT_ID;
 const web3 = new Web3(new Web3.providers.HttpProvider(`https://polygon-mumbai.g.alchemy.com/v2/${alchemyProjectId}`));
 
@@ -32,7 +34,7 @@ async function mintNFT(recipient, tokenId) {
   web3.eth.accounts.wallet.add(account);
   web3.eth.defaultAccount = account.address;
 
-  const tokenURI = `https://ipfs.io/ipfs/${folderCID}/metadata-${tokenId}.json`;
+  const tokenURI = `https://dweb.link/ipfs/${folderCID}/metadata-${tokenId}.json`;
 
   const txData = nftContract.methods.mintNFT(recipient, tokenId).encodeABI();
 
@@ -66,7 +68,7 @@ app.post("/mint", async (req, res) => {
     mintedTokens.add(nextTokenId);
 
     const txReceipt = await mintNFT(recipient, nextTokenId);
-    const metadataURL = `https://ipfs.io/ipfs/${folderCID}/metadata-${nextTokenId}.json`;
+    const metadataURL = `https://dweb.link/ipfs/${folderCID}/metadata-${nextTokenId}.json`;
 
     console.log("Metadata URL:", metadataURL);
 
