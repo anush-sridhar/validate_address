@@ -3,16 +3,18 @@ const Web3 = require('web3');
 const dotenv = require('dotenv');
 const contractABI = require("../build/contracts/MyNFT.json").abi;
 const axios = require("axios");
-const cors = require('cors');
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 
-app.use(cors({
-  origin: '*'
-}));
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', '*');
+  res.header('Access-Control-Allow-Methods', '*');
+  next();
+});
 
 const alchemyProjectId = process.env.ALCHEMY_PROJECT_ID;
 const web3 = new Web3(new Web3.providers.HttpProvider(`https://polygon-mumbai.g.alchemy.com/v2/${alchemyProjectId}`));
@@ -84,34 +86,31 @@ app.post("/mint", async (req, res) => {
 
     console.log("Minting NFT with token ID:", nextTokenId);
     const metadataURL = `https://ipfs.io/ipfs/${folderCID}/metadata-${nextTokenId}.json`;
-    console.log("Metadata URL:", metadataURL);
+        console.log("Metadata URL:", metadataURL);
     const txReceipt = await mintNFT(recipient, nextTokenId);
-    if(txReceipt){
-      res.status(200).json({'url': metadataURL, 'hash': txReceipt.blockHash});
-    }else{
+    if (txReceipt) {
+      res.status(200).json({ 'url': metadataURL, 'hash': txReceipt.blockHash });
+    } else {
       new Error('could not mint');
     }
-    
-    //res.status(200).send({ tokenId: nextTokenId, metadata: nftMetadata, txReceipt });
   } catch (error) {
     console.log("Error:", error.message);
     res.status(500).send(`got /mint error: ${error}`);
   }
 });
 
-app.post('/getRes', async (req, res) =>{
+app.post('/getRes', async (req, res) => {
   try {
     const url = req.body.url;
     console.log(`for url: ${url}`);
     const result = await axios.get(url);
     const data = result.data;
-    res.status(200).json({'imageUrl': data.image, 'rarity': data.attributes[0].value});
+    res.status(200).json({ 'imageUrl': data.image, 'rarity': data.attributes[0].value });
   } catch (error) {
     console.log("Error:", error.message);
     res.status(500).send(`got /getRes error: ${error}`);
   }
 });
 
-
-
 module.exports = app;
+
