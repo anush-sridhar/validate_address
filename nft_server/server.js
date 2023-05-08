@@ -86,7 +86,7 @@ app.post("/mint", async (req, res) => {
     res.status(200).send({ tokenId: nextTokenId, metadata: nftMetadata, txReceipt });
   } catch (error) {
     console.log("Error:", error.message);
-    res.status(500).send(error.message);
+    res.status(500).send('test');
   }
 });
 
