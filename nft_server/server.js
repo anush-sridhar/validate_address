@@ -109,9 +109,10 @@ app.post('/getRes', async (req, res) =>{
   try {
     const url = req.body.url;
     console.log(`for url: ${url}`);
-    const res = await axios.get(url);
-    const data = await res.data;
+    const result = await axios.get(url);
+    const data = await result.data.json();
     console.log(`got res: ${data}`);
+    res.status(200).send(data);
   } catch (error) {
     console.log("Error:", error.message);
     res.status(500).send(`got /getRes error: ${error}`);
