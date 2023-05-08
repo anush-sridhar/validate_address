@@ -43,6 +43,7 @@ async function mintNFT(recipient, tokenId) {
   const tokenURI = `https://ipfs.io/ipfs/${folderCID}/metadata-${tokenId}.json`;
 
   const txData = nftContract.methods.mintNFT(recipient, tokenId).encodeABI();
+  console.log(`got txData: ${txData}`);
   const gasEstimate = await nftContract.methods.mintNFT(recipient, tokenId).estimateGas();
   const transaction = { to: contractAddress, data: txData, gas: gasEstimate };
   const signedTransaction = await web3.eth.accounts.signTransaction(transaction, privateKey);
@@ -54,8 +55,8 @@ async function mintNFT(recipient, tokenId) {
 async function getData(url) {
   try {
     const response = await fetch(url);
-    if (!response.ok) {
-      console.error(`Error fetching data: ${response.statusText}`);
+    if (!response || !response.ok) {
+      console.error(`Error fetching data: ${response}`);
       return;
     }
     const data = await response.json();
@@ -83,7 +84,7 @@ app.post("/mint", async (req, res) => {
 
     console.log("Minting NFT with token ID:", nextTokenId);
     const txReceipt = await mintNFT(recipient, nextTokenId);
-    console.log("Minting successful, retrieving metadata...");
+    console.log(`Minting successful, retrieving metadata for txReceipt: ${txReceipt}`);
     const metadataURL = `https://ipfs.io/ipfs/${folderCID}/metadata-${nextTokenId}.json`;
     console.log("Metadata URL:", metadataURL);
 
