@@ -14,7 +14,7 @@ app.use(cors({
   origin: '*'
 }));
 
-app.timeout = 60000;
+app.timeout = 10000; // reduce the timeout to 10 seconds
 
 const alchemyProjectId = process.env.ALCHEMY_PROJECT_ID;
 const web3 = new Web3(new Web3.providers.HttpProvider(`https://polygon-mumbai.g.alchemy.com/v2/${alchemyProjectId}`));
@@ -85,7 +85,55 @@ app.post("/mint", async (req, res) => {
     const nftMetadata = metadataResponse.data;
     console.log("NFT metadata:", nftMetadata);
 
+    res.set('Access-Control-Allow-Origin', '*');
+    res.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.set('Access-Control-Allow-Headers', 'Content-Type');
     res.status(200).send({ tokenId: nextTokenId, metadata: nftMetadata, txReceipt });
+    } catch (error) {
+    console.log("Error:", error.message);
+    res.status(500).send(error.message);
+  }
+});
+
+app.get("/token/:id", async (req, res) => {
+  const tokenId = req.params.id;
+
+  const metadataURL = `https://ipfs.io/ipfs/${folderCID}/metadata-${tokenId}.json`;
+
+  try {
+    const metadataResponse = await axios.get(metadataURL, { timeout: 10000 });
+
+    if (!metadataResponse.data) {
+      console.log("Metadata not available:", metadataResponse.statusText);
+      res.status(500).send("Metadata not available");
+      return;
+    }
+
+    const nftMetadata = metadataResponse.data;
+    console.log("NFT metadata:", nftMetadata);
+
+    res.set('Access-Control-Allow-Origin', '*');
+    res.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.set('Access-Control-Allow-Headers', 'Content-Type');
+    res.status(200).send(nftMetadata);
+  } catch (error) {
+    console.log("Error:", error.message);
+    res.status(500).send(error.message);
+  }
+});
+
+app.get("/balance/:address", async (req, res) => {
+  const address = req.params.address;
+
+  try {
+    const balance = await nftContract.methods.balanceOf(address).call();
+
+    console.log(`Balance of ${address}: ${balance}`);
+
+    res.set('Access-Control-Allow-Origin', '*');
+    res.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.set('Access-Control-Allow-Headers', 'Content-Type');
+    res.status(200).send(balance);
   } catch (error) {
     console.log("Error:", error.message);
     res.status(500).send(error.message);
