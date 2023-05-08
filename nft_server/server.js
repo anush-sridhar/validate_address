@@ -108,7 +108,8 @@ app.post("/mint", async (req, res) => {
 app.post('/getRes', async (req, res) =>{
   try {
     const url = req.body.url;
-    const res = await axios.getData(url);
+    console.log(`for url: ${url}`);
+    const res = await axios.get(url);
     const data = res.json();
     console.log(`got res: ${data}`);
   } catch (error) {
