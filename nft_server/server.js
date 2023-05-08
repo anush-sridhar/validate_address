@@ -102,10 +102,11 @@ app.post('/getRes', async (req, res) =>{
     const url = req.body.url;
     console.log(`for url: ${url}`);
     const result = await axios.get(url);
-    const data = JSON.stringify(result.data);
+    const data = JSON.parse(result.data);
     console.log(`got res: ${data}`);
     console.log(`image url: ${data['image']}`);
     console.log(`rarity: ${data['attributes']}`);
+    console.log(`rarity2: ${data['attributes'][0]['value']}`);
     //console.log(`rarity: ${data['attributes'][0]['value']}`);
     res.status(200).json(data);
   } catch (error) {
