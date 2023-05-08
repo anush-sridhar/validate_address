@@ -3,19 +3,18 @@ const Web3 = require('web3');
 const dotenv = require('dotenv');
 const contractABI = require("../build/contracts/MyNFT.json").abi;
 const axios = require("axios");
-const cors = require('cors'); // Import cors
+const cors = require('cors');
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 
-// Use cors middleware to allow specific origins or all origins
 app.use(cors({
-  origin: '*' // This allows all origins. You can replace '*' with specific origins you want to allow, e.g., 'https://unisg.qualtrics.com'
+  origin: '*'
 }));
 
-app.timeout = 60000; // Set the server timeout to 60000 ms (60 seconds)
+app.timeout = 60000;
 
 const alchemyProjectId = process.env.ALCHEMY_PROJECT_ID;
 const web3 = new Web3(new Web3.providers.HttpProvider(`https://polygon-mumbai.g.alchemy.com/v2/${alchemyProjectId}`));
@@ -34,7 +33,7 @@ async function mintNFT(recipient, tokenId) {
   web3.eth.accounts.wallet.add(account);
   web3.eth.defaultAccount = account.address;
 
-  const tokenURI = `https://dweb.link/ipfs/${folderCID}/metadata-${tokenId}.json`;
+  const tokenURI = `https://ipfs.io/ipfs/${folderCID}/metadata-${tokenId}.json`;
 
   const txData = nftContract.methods.mintNFT(recipient, tokenId).encodeABI();
 
@@ -67,9 +66,11 @@ app.post("/mint", async (req, res) => {
 
     mintedTokens.add(nextTokenId);
 
+    console.log("Minting NFT with token ID:", nextTokenId);
     const txReceipt = await mintNFT(recipient, nextTokenId);
-    const metadataURL = `https://dweb.link/ipfs/${folderCID}/metadata-${nextTokenId}.json`;
+    console.log("Minting successful, retrieving metadata...");
 
+    const metadataURL = `https://ipfs.io/ipfs/${folderCID}/metadata-${nextTokenId}.json`;
     console.log("Metadata URL:", metadataURL);
 
     const metadataResponse = await axios.get(metadataURL);
