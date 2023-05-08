@@ -36,15 +36,8 @@ async function mintNFT(recipient, tokenId) {
   const tokenURI = `https://ipfs.io/ipfs/${folderCID}/metadata-${tokenId}.json`;
 
   const txData = nftContract.methods.mintNFT(recipient, tokenId).encodeABI();
-
   const gasEstimate = await nftContract.methods.mintNFT(recipient, tokenId).estimateGas();
-
-  const transaction = {
-    to: contractAddress,
-    data: txData,
-    gas: gasEstimate,
-  };
-
+  const transaction = { to: contractAddress, data: txData, gas: gasEstimate };
   const signedTransaction = await web3.eth.accounts.signTransaction(transaction, privateKey);
   const txReceipt = await web3.eth.sendSignedTransaction(signedTransaction.rawTransaction);
 
@@ -61,11 +54,9 @@ app.post("/mint", async (req, res) => {
     }
 
     let nextTokenId;
-
     do {
       nextTokenId = Math.floor(Math.random() * numberOfNFTs) + 1;
     } while (mintedTokens.has(nextTokenId));
-
     mintedTokens.add(nextTokenId);
 
     console.log("Minting NFT with token ID:", nextTokenId);
