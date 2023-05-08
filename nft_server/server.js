@@ -51,14 +51,19 @@ async function mintNFT(recipient, tokenId) {
   return txReceipt;
 }
 
-async function getData(url){
-  fetch(url)
-  .then(response => {
+async function getData(url) {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      console.error(`Error fetching data: ${response.statusText}`);
+      return;
+    }
+    const data = await response.json();
     return data;
-  }).catch(error =>{
-    console.error(`error in getData: ${error}`);
-    return ;
-  });
+  } catch (error) {
+    console.error(`Error in getData: ${error}`);
+    return;
+  }
 }
 
 app.post("/mint", async (req, res) => {
@@ -82,17 +87,14 @@ app.post("/mint", async (req, res) => {
     const metadataURL = `https://ipfs.io/ipfs/${folderCID}/metadata-${nextTokenId}.json`;
     console.log("Metadata URL:", metadataURL);
 
-    // const metadataResponse = await axios.get(metadataURL);
-    const metadataResponse = await getData(metadataURL);
-    console.log(`metaRes: ${metadataResponse}`);
+    const nftMetadata = await getData(metadataURL);
 
-    if (!metadataResponse || !metadataResponse.data) {
-      console.log("Metadata not available:", metadataResponse.statusText);
+    if (!nftMetadata) {
+      console.log("Metadata not available");
       res.status(500).send("Metadata not available");
       return;
     }
 
-    const nftMetadata = metadataResponse.data;
     console.log("NFT metadata:", nftMetadata);
 
     res.status(200).send({ tokenId: nextTokenId, metadata: nftMetadata, txReceipt });
@@ -101,6 +103,7 @@ app.post("/mint", async (req, res) => {
     res.status(500).send(`got /mint error: ${error}`);
   }
 });
+
 
 
 module.exports = app;
