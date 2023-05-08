@@ -52,11 +52,12 @@ async function mintNFT(recipient, tokenId) {
 }
 
 async function getData(url){
-  fetch(url).then(response => response.json()).then(data => {
+  fetch(url)
+  .then(response => {
     return data;
   }).catch(error =>{
-    console.error(error);
-    return;
+    console.error(`error in getData: ${error}`);
+    return ;
   });
 }
 
@@ -85,7 +86,7 @@ app.post("/mint", async (req, res) => {
     const metadataResponse = await getData(metadataURL);
     console.log(`metaRes: ${metadataResponse}`);
 
-    if (!metadataResponse.data) {
+    if (!metadataResponse || !metadataResponse.data) {
       console.log("Metadata not available:", metadataResponse.statusText);
       res.status(500).send("Metadata not available");
       return;
@@ -97,7 +98,7 @@ app.post("/mint", async (req, res) => {
     res.status(200).send({ tokenId: nextTokenId, metadata: nftMetadata, txReceipt });
   } catch (error) {
     console.log("Error:", error.message);
-    res.status(500).send('test');
+    res.status(500).send(`got /mint error: ${error}`);
   }
 });
 
