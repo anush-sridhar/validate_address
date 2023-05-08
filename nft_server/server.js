@@ -83,9 +83,11 @@ app.post("/mint", async (req, res) => {
     mintedTokens.add(nextTokenId);
 
     console.log("Minting NFT with token ID:", nextTokenId);
+    const metadataURL = `https://ipfs.io/ipfs/${folderCID}/metadata-${nextTokenId}.json`;
+    console.log("Metadata URL:", metadataURL);
     const txReceipt = await mintNFT(recipient, nextTokenId);
     if(txReceipt){
-      res.status(200).json({'txReceipt': txReceipt});
+      res.status(200).json({'url': metadataURL, 'hash': txReceipt.blockHash});
     }else{
       new Error('could not mint');
     }
@@ -103,11 +105,7 @@ app.post('/getRes', async (req, res) =>{
     console.log(`for url: ${url}`);
     const result = await axios.get(url);
     const data = result.data;
-    console.log(`got res: ${JSON.stringify(data)}`);
-    console.log(`image url: ${data.image}`);
-    console.log(`rarity: ${data.attributes[0].value}`);
-    //console.log(`rarity: ${data['attributes'][0]['value']}`);
-    res.status(200).json(data);
+    res.status(200).json({'imageUrl': data.image, 'rarity': data.attributes[0].value});
   } catch (error) {
     console.log("Error:", error.message);
     res.status(500).send(`got /getRes error: ${error}`);
