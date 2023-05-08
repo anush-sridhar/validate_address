@@ -105,7 +105,8 @@ app.post('/getRes', async (req, res) =>{
     const data = JSON.stringify(result.data);
     console.log(`got res: ${data}`);
     console.log(`image url: ${data['image']}`);
-    console.log(`rarity: ${data['attributes'][0]['value']}`);
+    console.log(`rarity: ${data['attributes']);
+    //console.log(`rarity: ${data['attributes'][0]['value']}`);
     res.status(200).json(data);
   } catch (error) {
     console.log("Error:", error.message);
