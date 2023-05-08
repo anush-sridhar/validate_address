@@ -37,10 +37,12 @@ async function mintNFT(recipient, tokenId) {
 
   const txData = nftContract.methods.mintNFT(recipient, tokenId).encodeABI();
 
+  const gasEstimate = await nftContract.methods.mintNFT(recipient, tokenId).estimateGas();
+
   const transaction = {
     to: contractAddress,
     data: txData,
-    gas: await nftContract.methods.mintNFT(recipient, tokenId).estimateGas(),
+    gas: gasEstimate,
   };
 
   const signedTransaction = await web3.eth.accounts.signTransaction(transaction, privateKey);
@@ -72,7 +74,7 @@ app.post("/mint", async (req, res) => {
     const metadataURL = `https://ipfs.io/ipfs/${folderCID}/metadata-${nextTokenId}.json`;
     console.log("Metadata URL:", metadataURL);
 
-    const metadataResponse = await axios.get(metadataURL);
+    const metadataResponse = await axios.get(metadataURL, { timeout: 10000 });
 
     if (!metadataResponse.data) {
       console.log("Metadata not available:", metadataResponse.statusText);
