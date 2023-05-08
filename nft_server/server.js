@@ -110,7 +110,7 @@ app.post('/getRes', async (req, res) =>{
     const url = req.body.url;
     console.log(`for url: ${url}`);
     const res = await axios.get(url);
-    const data = res.json();
+    const data = await res.data;
     console.log(`got res: ${data}`);
   } catch (error) {
     console.log("Error:", error.message);
