@@ -88,7 +88,7 @@ app.post("/mint", async (req, res) => {
     console.log(`Minting successful, retrieving metadata for txReceipt: ${txReceipt}`);
     const metadataURL = `https://ipfs.io/ipfs/${folderCID}/metadata-${nextTokenId}.json`;
     console.log("Metadata URL:", metadataURL);
-    const result = await axios.get(url);
+    const result = await axios.get(metadataURL);
     const nftMetadata = JSON.stringify(result.data);
 
     if (!nftMetadata) {
