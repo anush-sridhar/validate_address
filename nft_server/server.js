@@ -73,6 +73,7 @@ app.post("/mint", async (req, res) => {
     console.log("Metadata URL:", metadataURL);
 
     const metadataResponse = await axios.get(metadataURL);
+    console.log(`metaRes: ${metadataResponse}`);
 
     if (!metadataResponse.data) {
       console.log("Metadata not available:", metadataResponse.statusText);
