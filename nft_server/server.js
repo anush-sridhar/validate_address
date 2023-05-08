@@ -72,7 +72,7 @@ app.post("/mint", async (req, res) => {
     const metadataURL = `https://ipfs.io/ipfs/${folderCID}/metadata-${nextTokenId}.json`;
     console.log("Metadata URL:", metadataURL);
 
-    const metadataResponse = await axios.get(metadataURL, { timeout: 10000 });
+    const metadataResponse = await axios.get(metadataURL);
 
     if (!metadataResponse.data) {
       console.log("Metadata not available:", metadataResponse.statusText);
