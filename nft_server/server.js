@@ -90,17 +90,16 @@ app.post("/mint", async (req, res) => {
     console.log("Metadata URL:", metadataURL);
     const result = await axios.get(metadataURL);
     const nftMetadata = JSON.stringify(result.data);
+    console.log("NFT metadata:", nftMetadata);
+    console.log(`image url: ${nftMetadata.image}`);
+    console.log(`rarity: ${nftMetadata.attributes[0].value}`);
 
     if (!nftMetadata) {
       console.log("Metadata not available");
       res.status(500).send("Metadata not available");
       return;
     }
-
-    console.log(`image url: ${nftMetadata.image}`);
-    console.log(`rarity: ${nftMetadata.attributes[0].value}`);
-
-    console.log("NFT metadata:", nftMetadata);
+   
     res.status(200).json(nftMetadata)
 
     //res.status(200).send({ tokenId: nextTokenId, metadata: nftMetadata, txReceipt });
