@@ -51,6 +51,15 @@ async function mintNFT(recipient, tokenId) {
   return txReceipt;
 }
 
+async function getData(url){
+  fetch(url).then(response => response.json()).then(data => {
+    return data;
+  }).catch(error =>{
+    console.error(error);
+    return;
+  });
+}
+
 app.post("/mint", async (req, res) => {
   try {
     const recipient = req.body.recipient;
@@ -72,7 +81,8 @@ app.post("/mint", async (req, res) => {
     const metadataURL = `https://ipfs.io/ipfs/${folderCID}/metadata-${nextTokenId}.json`;
     console.log("Metadata URL:", metadataURL);
 
-    const metadataResponse = await axios.get(metadataURL);
+    // const metadataResponse = await axios.get(metadataURL);
+    const metadataResponse = await getData(metadataURL);
     console.log(`metaRes: ${metadataResponse}`);
 
     if (!metadataResponse.data) {
