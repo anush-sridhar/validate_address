@@ -103,7 +103,7 @@ app.post('/getRes', async (req, res) => {
   try {
     const url = req.body.url;
     console.log(`for url: ${url}`);
-    const result = await axios.get(url);
+    const result = await axios.get(url, { timeout: 10000 });
     const data = result.data;
     res.status(200).json({ 'imageUrl': data.image, 'rarity': data.attributes[0].value });
   } catch (error) {
