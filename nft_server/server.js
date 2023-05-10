@@ -22,7 +22,7 @@ const web3 = new Web3(new Web3.providers.HttpProvider(`https://polygon-mumbai.g.
 const contractAddress = '0xA30ed95125655C835f297e06b02F2220107a6417';
 const nftContract = new web3.eth.Contract(contractABI, contractAddress);
 
-const folderCID = "Qmb5dU98fjdLbTZYMJEctZKSufq8895yFiZkms7VgEbyCf";
+const folderCID = "QmWjah6ACjNmjKTt9whAW7DDxJBgYt6XYT4VUgM5Ku2bBo";
 const numberOfNFTs = 500;
 
 let mintedTokens = new Set();
@@ -42,7 +42,7 @@ async function mintNFT(recipient, tokenId) {
   web3.eth.accounts.wallet.add(account);
   web3.eth.defaultAccount = account.address;
 
-  const tokenURI = `https://ipfs.io/ipfs/${folderCID}/metadata-${tokenId}.json`;
+  const tokenURI = `https://aquamarine-embarrassing-eel-178.mypinata.cloud/ipfs/${folderCID}/metadata-${tokenId}.json`;
 
   const txData = nftContract.methods.mintNFT(recipient, tokenId).encodeABI();
   console.log(`got txData: ${txData}`);
@@ -85,7 +85,7 @@ app.post("/mint", async (req, res) => {
     mintedTokens.add(nextTokenId);
 
     console.log("Minting NFT with token ID:", nextTokenId);
-    const metadataURL = `https://ipfs.io/ipfs/${folderCID}/metadata-${nextTokenId}.json`;
+    const metadataURL = `https://aquamarine-embarrassing-eel-178.mypinata.cloud/ipfs/${folderCID}/metadata-${nextTokenId}.json`;
         console.log("Metadata URL:", metadataURL);
     const txReceipt = await mintNFT(recipient, nextTokenId);
     if (txReceipt) {
