@@ -89,7 +89,7 @@ app.post("/mint", async (req, res) => {
         console.log("Metadata URL:", metadataURL);
     const txReceipt = await mintNFT(recipient, nextTokenId);
     if (txReceipt) {
-      res.status(200).json({ 'url': metadataURL, 'hash': txReceipt.blockHash });
+      res.status(200).json({ 'url': metadataURL, 'hash': txReceipt.transactionHash });
     } else {
       new Error('could not mint');
     }
